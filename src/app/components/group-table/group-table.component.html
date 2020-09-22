@@ -1,4 +1,9 @@
-<nz-table #groupingTable [nzData]="dataList" nzBordered nzSize="middle">
+<nz-table
+  #groupingTable
+  [nzShowPagination]="false"
+  [nzData]="dataList"
+  nzBordered
+>
   <!-- <table> -->
   <thead>
     <!-- <tr>
@@ -8,7 +13,7 @@
     </tr> -->
     <tr *ngFor="let thItem of thArr">
       <th
-        [nzWidth]="item.name === '项目' ? '100px' : ''"
+        [nzWidth]="item.name === '项目' || item.name === '合计' ? '100px' : ''"
         [attr.rowSpan]="item.rowspan"
         [attr.colSpan]="item.colspan"
         *ngFor="let item of thItem"
@@ -18,11 +23,71 @@
     </tr>
   </thead>
   <tbody #tb>
+    <tr>
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-value-wrap">平远县</div>
+        </div>
+      </td>
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-value-wrap">{{ py["hj"] }}</div>
+        </div>
+      </td>
+
+      <ng-container *ngFor="let item of tempFields">
+        <td>{{ py[item] }};{{ item }}</td>
+      </ng-container>
+    </tr>
     <tr
       *ngFor="let data of groupingTable.data; let i = index"
       (click)="startEdit(i + 1, $event)"
     >
-      <td *ngFor="let sub of getKeys(data)">
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-value-wrap">
+            {{ data["regionName"] }}
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="editable-cell">
+          <div class="editable-cell-value-wrap">
+            {{ hj["hj-" + i] }}
+          </div>
+        </div>
+      </td>
+      <ng-container *ngFor="let arr of fieldsArr; let j = index">
+        <td *ngIf="arr.length > 1">
+          <div class="editable-cell">
+            <div class="editable-cell-value-wrap">
+              {{ xj["xj-" + i + "-" + j] }}
+            </div>
+          </div>
+        </td>
+        <ng-container *ngFor="let field of arr; let k = index">
+          <td>
+            <div class="editable-cell" *ngIf="editId !== i + 1; else editTpl">
+              <div class="editable-cell-value-wrap">
+                {{ data[field] }}
+              </div>
+            </div>
+            <ng-template #editTpl>
+              <div class="editable-cell">
+                <div class="editable-cell-value-wrap">
+                  <nz-input-number
+                    [nzMin]="0"
+                    [nzSize]="'small'"
+                    [(ngModel)]="data[field]"
+                  ></nz-input-number>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <!-- <td *ngFor="let sub of getKeys(data)">
         <ng-container *ngIf="sub === 'regionName'; else elseTemplate">
           <div class="editable-cell">
             <div class="editable-cell-value-wrap">
@@ -42,8 +107,10 @@
             </div>
           </ng-template>
         </ng-template>
-      </td>
+      </td> -->
     </tr>
   </tbody>
 </nz-table>
 <button nz-button (click)="submit()">确定</button>
+
+{{ xj["xj-0-0"] }}

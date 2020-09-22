@@ -13,267 +13,6 @@ import { NzInputDirective } from "ng-zorro-antd";
   styleUrls: ["./group-table.component.scss"],
 })
 export class GroupTableComponent implements OnInit {
-  thOptions2 = [
-    {
-      id: 1,
-      name: "兽类",
-      unit: "种",
-      creator: 1,
-      type: 2,
-      createTime: "2020-09-22 10:23:36",
-      pId: null,
-      level: 1,
-      creatorName: "超级管理员",
-      filed: null,
-      childs: [
-        {
-          id: 2,
-          name: "果子狸",
-          unit: "种",
-          creator: 1,
-          type: 2,
-          createTime: "2020-09-22 10:23:57",
-          pId: 1,
-          level: 2,
-          creatorName: "超级管理员",
-          filed: null,
-          childs: [
-            {
-              id: 3,
-              name: "狸",
-              unit: "种",
-              creator: 1,
-              type: 2,
-              createTime: "2020-09-22 10:24:18",
-              pId: 2,
-              level: 3,
-              creatorName: "超级管理员",
-              filed: "1-1",
-              childs: [],
-            },
-            {
-              id: 8,
-              name: "狐狸",
-              unit: "种",
-              creator: 1,
-              type: 2,
-              createTime: "2020-09-22 15:33:21",
-              pId: 2,
-              level: 3,
-              creatorName: "超级管理员",
-              filed: "1-2",
-              childs: [],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "鱼类",
-      unit: "种",
-      creator: 1,
-      type: 2,
-      createTime: "2020-09-22 10:24:36",
-      pId: null,
-      level: 1,
-      creatorName: "超级管理员",
-      filed: "4-1",
-      childs: [],
-    },
-  ];
-  thOptions1 = [
-    {
-      name: "森林碳汇",
-      unit: "万亩",
-      hasChildssss: true,
-      level: 1,
-      childs: [
-        {
-          name: "市局任务",
-          unit: "万亩",
-          level: 2,
-          hasChildssss: false,
-          childs: [],
-          filed: "filed1",
-        },
-        {
-          name: "实际完成",
-          unit: "万亩",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed2",
-        },
-        {
-          name: "先造后补",
-          unit: "万亩",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed3",
-        },
-        {
-          name: "碳汇造林",
-          unit: "万亩",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed4",
-        },
-      ],
-    },
-    {
-      name: "生态景观林带建设",
-      unit: "单位1",
-      level: 1,
-      hasChildssss: true,
-      childs: [
-        {
-          name: "任务1",
-          unit: "单位1",
-          level: 2,
-          hasChildssss: true,
-          childs: [
-            {
-              name: "任务1",
-              unit: "单位1",
-              level: 3,
-              hasChildssss: false,
-              childs: [],
-              filed: "filed5",
-            },
-          ],
-        },
-        {
-          name: "任务2",
-          unit: "单位1",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed6",
-        },
-        {
-          name: "任务3",
-          unit: "单位1",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed7",
-        },
-        {
-          name: "任务4",
-          unit: "单位1",
-          level: 2,
-
-          hasChildssss: false,
-          childs: [],
-          filed: "filed8",
-        },
-      ],
-    },
-    {
-      name: "表头",
-      unit: "单位3",
-      hasChildssss: false,
-      childs: [],
-      filed: "filed9",
-      level: 1,
-    },
-    {
-      name: "森林抚育",
-      unit: "单位2",
-      hasChildssss: true,
-      level: 1,
-      childs: [
-        {
-          name: "省级森林抚育",
-          unit: "单位2",
-          level: 2,
-          hasChildssss: false,
-          childs: [],
-          filed: "filed10",
-        },
-        {
-          name: "中央财政森林抚育",
-          unit: "单位2",
-          hasChildssss: true,
-          level: 2,
-          childs: [
-            {
-              name: "2018年任务",
-              unit: "单位2",
-              hasChildssss: false,
-              childs: [],
-              filed: "filed11",
-              level: 3,
-            },
-            {
-              name: "2019年任务",
-              unit: "单位2",
-              hasChildssss: false,
-              childs: [],
-              filed: "filed12",
-              level: 3,
-            },
-            {
-              name: "2019年任务",
-              unit: "单位2",
-              hasChildssss: true,
-              level: 3,
-              childs: [
-                {
-                  name: "2019年任务",
-                  unit: "单位2",
-                  hasChildssss: false,
-                  childs: [],
-                  filed: "filed13",
-                  level: 4,
-                },
-                {
-                  name: "2019年任务",
-                  unit: "单位2",
-                  level: 4,
-                  hasChildssss: true,
-                  childs: [
-                    {
-                      name: "2019年任务",
-                      unit: "单位2",
-                      level: 5,
-                      hasChildssss: false,
-                      childs: [],
-                      filed: "filed14",
-                    },
-                    {
-                      name: "2019年任务",
-                      unit: "单位2",
-                      level: 5,
-                      hasChildssss: false,
-                      childs: [],
-                      filed: "filed15",
-                    },
-                    {
-                      name: "2019年任务",
-                      unit: "单位2",
-                      level: 5,
-                      hasChildssss: false,
-                      childs: [],
-                      filed: "filed16",
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
   thOptions = [
     {
       id: 1,
@@ -287,6 +26,12 @@ export class GroupTableComponent implements OnInit {
       creatorName: "超级管理员",
       filed: null,
       childs: [
+        {
+          name: "小计",
+          level: 2,
+          childs: [],
+          fileds: ["1-3", "1-8"],
+        },
         {
           id: 2,
           name: "果子狸",
@@ -355,6 +100,12 @@ export class GroupTableComponent implements OnInit {
       filed: null,
       childs: [
         {
+          name: "小计",
+          level: 2,
+          childs: [],
+          fileds: ["13-17", "13-18", "13-16"],
+        },
+        {
           id: 15,
           name: "麻雀",
           unit: "只",
@@ -412,6 +163,7 @@ export class GroupTableComponent implements OnInit {
   ];
   maxDeepth: number;
   editId: number | null;
+  tempFields = [];
   constructor() {}
   thArr = [];
   @ViewChild("tb", { static: true }) tb: ElementRef;
@@ -424,10 +176,10 @@ export class GroupTableComponent implements OnInit {
       this.editId = null;
     }
   }
-  dataList = [
+  dataList2 = [
     {
       regionName: "河头镇",
-      // regionNo: 1,
+      regionNo: 1,
       field1: 1,
       field2: 1,
       field3: 1,
@@ -467,9 +219,19 @@ export class GroupTableComponent implements OnInit {
     },
   ];
 
+  dataList = [
+    { regionName: "查干镇", regionNo: 1 },
+    { regionName: "河头镇", regionNo: 2 },
+  ];
+
+  fieldsArr = [["1-3", "1-8"], ["4"], ["13-17", "13-18", "13-16"]];
+
   getKeys(item) {
     return Object.keys(item);
   }
+
+  xj = {};
+  hj = {};
 
   ngOnInit() {
     console.log(this.getMaxLevel(this.thOptions));
@@ -478,10 +240,97 @@ export class GroupTableComponent implements OnInit {
     console.log(this.thOptions);
     this.generateTharr(this.thOptions);
     console.log(this.thArr);
-    this.thArr[0].unshift({
-      name: "项目",
-      colspan: 1,
-      rowspan: this.maxDeepth,
+    this.thArr[0].unshift(
+      {
+        name: "项目",
+        colspan: 1,
+        rowspan: this.maxDeepth,
+      },
+      {
+        name: "合计",
+        colspan: 1,
+        rowspan: this.maxDeepth,
+      }
+    );
+    this.initDataList();
+    this.init1stRow();
+  }
+  initDataList() {
+    this.dataList.forEach((data, i) => {
+      // let tempFields = [];
+      this.fieldsArr.forEach((arr, j) => {
+        if (arr.length > 1) {
+          this.defineComputeXj(this.xj, `xj-${i}-${j}`, data, arr);
+        }
+        arr.forEach((field) => {
+          data[field] = 0;
+          // tempFields.push(field);
+          if (i === 0) {
+            this.tempFields.push(field);
+          }
+        });
+      });
+      // this.defineComputeXj(this.hj, `hj-${i}`, data, tempFields);
+      this.defineComputeXj(this.hj, `hj-${i}`, data, this.tempFields);
+    });
+  }
+  py = {};
+  init1stRow() {
+    const that = this;
+    this.tempFields.forEach((field) => {
+      Object.defineProperty(this.py, field, {
+        get() {
+          return that.dataList.reduce((acc, curr) => {
+            return acc + (curr.hasOwnProperty(field) ? +curr[field] : 0);
+          }, 0);
+        },
+      });
+    });
+
+    Object.defineProperty(this.py, "hj", {
+      get() {
+        return that.dataList.reduce((acc, curr, index) => {
+          return acc + that.hj[`hj-${index}`];
+        }, 0);
+      },
+    });
+
+    // TODO: 平远合计
+    this.dataList.forEach((data, i) => {
+      let tempFields = [];
+      this.fieldsArr.forEach((arr, j) => {
+        if (arr.length > 1) {
+          tempFields.push(`xj-${i}-${j}`);
+        }
+      });
+      console.warn(tempFields);
+      // Object.defineProperty(this.py, "hj", {
+      //   get() {
+      //     return that.dataList.reduce((acc, curr, index) => {
+      //       return acc + that.hj[`hj-${index}`];
+      //     }, 0);
+      //   },
+      // });
+    });
+
+    Object.keys(this.hj).forEach((key) => {
+      Object.defineProperty(this.py, key, {
+        get() {
+          return that.dataList.reduce((acc, curr, index) => {
+            return acc + that.hj[`hj-${index}`];
+          }, 0);
+        },
+      });
+    });
+  }
+
+  defineComputeXj(obj, prop, data, fileds: Array<any>) {
+    Object.defineProperty(obj, prop, {
+      get() {
+        return fileds.reduce((accumulator, field) => {
+          return accumulator + (data.hasOwnProperty(field) ? +data[field] : 0);
+        }, 0);
+      },
     });
   }
   initThArr() {
