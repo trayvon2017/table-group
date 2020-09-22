@@ -1,0 +1,49 @@
+<nz-table #groupingTable [nzData]="dataList" nzBordered nzSize="middle">
+  <!-- <table> -->
+  <thead>
+    <!-- <tr>
+      <th [attr.colspan]="item['colspan']" *ngFor="let item of thOptions">
+        {{ item.name }}
+      </th>
+    </tr> -->
+    <tr *ngFor="let thItem of thArr">
+      <th
+        [nzWidth]="item.name === '项目' ? '100px' : ''"
+        [attr.rowSpan]="item.rowspan"
+        [attr.colSpan]="item.colspan"
+        *ngFor="let item of thItem"
+      >
+        {{ item.name }}
+      </th>
+    </tr>
+  </thead>
+  <tbody #tb>
+    <tr
+      *ngFor="let data of groupingTable.data; let i = index"
+      (click)="startEdit(i + 1, $event)"
+    >
+      <td *ngFor="let sub of getKeys(data)">
+        <ng-container *ngIf="sub === 'regionName'; else elseTemplate">
+          <div class="editable-cell">
+            <div class="editable-cell-value-wrap">
+              {{ data[sub] }}
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="editable-cell" *ngIf="editId !== i + 1; else editTpl">
+            <div class="editable-cell-value-wrap">
+              {{ data[sub] }}
+            </div>
+          </div>
+          <ng-template #editTpl>
+            <div>
+              <input type="text" nz-input [(ngModel)]="data[sub]" />
+            </div>
+          </ng-template>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<button nz-button (click)="submit()">确定</button>
