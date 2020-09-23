@@ -220,11 +220,24 @@ export class GroupTableComponent implements OnInit {
   ];
 
   dataList = [
-    { regionName: "查干镇", regionNo: 1 },
-    { regionName: "河头镇", regionNo: 2 },
+    { regionName: "查干镇", no: 1 },
+    { regionName: "河头镇", no: 2 },
   ];
 
-  fieldsArr = [["1-3", "1-8"], ["4"], ["13-17", "13-18", "13-16"]];
+  fieldsArr = [
+    {
+      label: "1",
+      fields: ["1-3", "1-8"],
+    },
+    {
+      label: "4",
+      fields: ["4"],
+    },
+    {
+      label: "13",
+      fields: ["13-17", "13-18", "13-16"],
+    },
+  ];
 
   getKeys(item) {
     return Object.keys(item);
@@ -232,11 +245,11 @@ export class GroupTableComponent implements OnInit {
 
   xj = {};
   hj = {};
+  py = {};
 
   ngOnInit() {
     console.log(this.getMaxLevel(this.thOptions));
     this.maxDeepth = this.getMaxLevel(this.thOptions);
-    // this.initThArr()
     console.log(this.thOptions);
     this.generateTharr(this.thOptions);
     console.log(this.thArr);
@@ -257,12 +270,16 @@ export class GroupTableComponent implements OnInit {
   }
   initDataList() {
     this.dataList.forEach((data, i) => {
-      // let tempFields = [];
       this.fieldsArr.forEach((arr, j) => {
-        if (arr.length > 1) {
-          this.defineComputeXj(this.xj, `xj-${i}-${j}`, data, arr);
+        if (arr.fields.length > 1) {
+          this.defineComputeProperty(
+            this.xj,
+            `xj-${data["no"]}-${arr["label"]}`,
+            data,
+            arr.fields
+          );
         }
-        arr.forEach((field) => {
+        arr.fields.forEach((field) => {
           data[field] = 0;
           // tempFields.push(field);
           if (i === 0) {
@@ -270,15 +287,21 @@ export class GroupTableComponent implements OnInit {
           }
         });
       });
-      // this.defineComputeXj(this.hj, `hj-${i}`, data, tempFields);
-      this.defineComputeXj(this.hj, `hj-${i}`, data, this.tempFields);
+      this.defineComputeProperty(
+        this.hj,
+        `hj-${data["no"]}`,
+        data,
+        this.tempFields
+      );
     });
+    console.log(this.dataList);
   }
-  py = {};
   init1stRow() {
     const that = this;
+    // 第一行fields汇总
     this.tempFields.forEach((field) => {
       Object.defineProperty(this.py, field, {
+        enumerable: true,
         get() {
           return that.dataList.reduce((acc, curr) => {
             return acc + (curr.hasOwnProperty(field) ? +curr[field] : 0);
@@ -287,54 +310,53 @@ export class GroupTableComponent implements OnInit {
       });
     });
 
+    // 第一行fields汇总
     Object.defineProperty(this.py, "hj", {
+      enumerable: true,
       get() {
         return that.dataList.reduce((acc, curr, index) => {
-          return acc + that.hj[`hj-${index}`];
+          return acc + that.hj[`hj-${curr["no"]}`];
         }, 0);
       },
     });
 
-    // TODO: 平远合计
-    this.dataList.forEach((data, i) => {
-      let tempFields = [];
-      this.fieldsArr.forEach((arr, j) => {
-        if (arr.length > 1) {
-          tempFields.push(`xj-${i}-${j}`);
-        }
-      });
-      console.warn(tempFields);
-      // Object.defineProperty(this.py, "hj", {
-      //   get() {
-      //     return that.dataList.reduce((acc, curr, index) => {
-      //       return acc + that.hj[`hj-${index}`];
-      //     }, 0);
-      //   },
-      // });
+    // 第一行小计汇总---
+    this.fieldsArr.forEach((arr, j) => {
+      if (arr.fields.length > 1) {
+        const tempArr = [];
+        this.dataList.forEach((data, i) => {
+          tempArr.push(`xj-${data["no"]}-${arr["label"]}`);
+        });
+        this.defineComputeProperty(
+          this.py,
+          `sum-${arr["label"]}`,
+          this.xj,
+          tempArr
+        );
+      }
     });
 
-    Object.keys(this.hj).forEach((key) => {
-      Object.defineProperty(this.py, key, {
-        get() {
-          return that.dataList.reduce((acc, curr, index) => {
-            return acc + that.hj[`hj-${index}`];
-          }, 0);
-        },
-      });
-    });
+    // Object.keys(this.hj).forEach((key) => {
+    //   Object.defineProperty(this.py, key, {
+    //     enumerable: true,
+    //     get() {
+    //       return that.dataList.reduce((acc, curr, index) => {
+    //         return acc + that.hj[`hj-${curr["no"]}`];
+    //       }, 0);
+    //     },
+    //   });
+    // });
   }
 
-  defineComputeXj(obj, prop, data, fileds: Array<any>) {
+  defineComputeProperty(obj, prop, data, fileds: Array<any>) {
     Object.defineProperty(obj, prop, {
+      enumerable: true,
       get() {
         return fileds.reduce((accumulator, field) => {
           return accumulator + (data.hasOwnProperty(field) ? +data[field] : 0);
         }, 0);
       },
     });
-  }
-  initThArr() {
-    // throw new Error("Method not implemented.");
   }
 
   getMaxLevel(options: Array<any>): number {
@@ -389,6 +411,17 @@ export class GroupTableComponent implements OnInit {
 
   submit() {
     console.log(this.dataList);
+    console.log("py", JSON.stringify(this.py));
+    console.log("xj", this.xj);
+    console.log("hj", this.hj);
+    console.log(
+      JSON.stringify({
+        py: this.py,
+        dataList: this.dataList,
+        xj: this.xj,
+        hj: this.hj,
+      })
+    );
   }
 
   startEdit(id: number, event: MouseEvent): void {

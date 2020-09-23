@@ -34,9 +34,19 @@
           <div class="editable-cell-value-wrap">{{ py["hj"] }}</div>
         </div>
       </td>
-
-      <ng-container *ngFor="let item of tempFields">
-        <td>{{ py[item] }};{{ item }}</td>
+      <ng-container *ngFor="let arr of fieldsArr; let i = index">
+        <td *ngIf="arr.fields.length > 1">
+          <div class="editable-cell">
+            <div class="editable-cell-value-wrap">
+              {{ py["sum-" + arr["label"]] }}
+            </div>
+          </div>
+        </td>
+        <td *ngFor="let field of arr.fields">
+          <div class="editable-cell">
+            <div class="editable-cell-value-wrap">{{ py[field] }}</div>
+          </div>
+        </td>
       </ng-container>
     </tr>
     <tr
@@ -53,19 +63,19 @@
       <td>
         <div class="editable-cell">
           <div class="editable-cell-value-wrap">
-            {{ hj["hj-" + i] }}
+            {{ hj["hj-" + data["no"]] }}
           </div>
         </div>
       </td>
       <ng-container *ngFor="let arr of fieldsArr; let j = index">
-        <td *ngIf="arr.length > 1">
+        <td *ngIf="arr.fields.length > 1">
           <div class="editable-cell">
             <div class="editable-cell-value-wrap">
-              {{ xj["xj-" + i + "-" + j] }}
+              {{ xj["xj-" + data["no"] + "-" + arr["label"]] }}
             </div>
           </div>
         </td>
-        <ng-container *ngFor="let field of arr; let k = index">
+        <ng-container *ngFor="let field of arr.fields; let k = index">
           <td>
             <div class="editable-cell" *ngIf="editId !== i + 1; else editTpl">
               <div class="editable-cell-value-wrap">
@@ -75,11 +85,13 @@
             <ng-template #editTpl>
               <div class="editable-cell">
                 <div class="editable-cell-value-wrap">
-                  <nz-input-number
+                  <input type="number" nz-input [(ngModel)]="data[field]" />
+
+                  <!-- <nz-input-number
                     [nzMin]="0"
                     [nzSize]="'small'"
                     [(ngModel)]="data[field]"
-                  ></nz-input-number>
+                  ></nz-input-number> -->
                 </div>
               </div>
             </ng-template>
@@ -112,5 +124,3 @@
   </tbody>
 </nz-table>
 <button nz-button (click)="submit()">确定</button>
-
-{{ xj["xj-0-0"] }}
